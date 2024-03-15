@@ -1,0 +1,1 @@
+"use strict";var e=require("@minsk/util/src/typeof");Object.keys(e).forEach((function(t){"default"===t||Object.prototype.hasOwnProperty.call(exports,t)||Object.defineProperty(exports,t,{enumerable:!0,get:function(){return e[t]}})}));
