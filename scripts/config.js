@@ -36,21 +36,20 @@ const builds = {
         entry: buildEntryPath,
         dest: resolve(__dirname, "../dist/util.min.js"),
         format: "umd",
-        env: "development",
+        env: "production",
         name: "util"
     },
     "browser-prod": {
         entry: buildEntryPath,
         dest: resolve(__dirname, "../dist/util.js"),
         format: "umd",
-        env: "production",
+        env: "development",
         name: "util"
     }
 };
 
 function genConfig(buildName){
     const option = builds[buildName];
-    console.log(resolve(__dirname, "../", "tsconfig.json"));
     const prod = option.env === "production"
     return {
         input: option.entry,

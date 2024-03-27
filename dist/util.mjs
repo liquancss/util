@@ -1,1 +1,1 @@
-export * from '@minsk/util/dist/util.common.js'
+export * from './dist/util.common.js'

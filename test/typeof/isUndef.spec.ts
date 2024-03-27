@@ -1,5 +1,5 @@
 import {equal} from "assert";
-import { isUndef } from "@minsk/util/src";
+import { isUndef } from "../../src/index";
 describe("isUndef", ()=>{
     it("isUndef-1", ()=>{
         equal(isUndef(null), true);

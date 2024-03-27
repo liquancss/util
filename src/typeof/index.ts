@@ -1,1 +1,1 @@
-export * from "@minsk/util/src/typeof/typeof";
+export * from "./typeof";

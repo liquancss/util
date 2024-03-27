@@ -1,5 +1,5 @@
 import {equal} from "assert";
-import { isArray, isBoolean, isDate, isMap, isNull, isNumber, isRegExp, isSet, isString, isUndefined, isWeakMap } from "@minsk/util/src";
+import { isArray, isBoolean, isDate, isMap, isNull, isNumber, isRegExp, isSet, isString, isUndefined, isWeakMap } from "../../src/index";
 type CompareTypeValue = Array<any>;
 interface CompareType{
     String: CompareTypeValue,
