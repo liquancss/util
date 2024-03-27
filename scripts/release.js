@@ -77,10 +77,14 @@ async function commit(){
     }
 }
 async function publishPackage(targetVersion){
-    await run("npm", ["publish", "--access", "public"])
+    /*
+     PUT https://registry.npmjs.org/@minsk%2futil - Cannot publish over previously published version "1.0.0".
+    */
+    await run("npm", ["publish", "--access", "public"], {"stdio": "pipe"});
+    console.log(chalk.green(`Successfully release v${targetVersion}`))
 }
 async function test(){
-    const targetVersion = "1.0.0";
+    const targetVersion = "1.0.1";
    await commit();
    await publishPackage(targetVersion)
     
