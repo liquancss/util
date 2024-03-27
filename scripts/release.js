@@ -84,7 +84,6 @@ async function publishPackage(targetVersion){
     console.log(chalk.green(`Successfully release v${targetVersion}`))
 }
 async function test(){
-    const targetVersion = "1.0.1";
    await commit();
    await publishPackage(targetVersion)
     

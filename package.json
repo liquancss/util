@@ -1,6 +1,7 @@
 {
   "name": "@minsk/util",
-  "version": "1.0.0",
+  "version": "1.0.1",
+  "author": "re_is_good",
   "description": "js util like get type from js etc.",
   "module": "dist/util.esm.js",
   "main": "dist/util.common.js",
@@ -24,7 +25,8 @@
     "./types/*": [
       "./types/*",
       "./types/*.d.ts"
-    ]
+    ],
+    "./package.json": "./package.json"
   },
   "keywords": [
     "js",
@@ -32,7 +34,6 @@
     "typeof",
     "js type"
   ],
-  "author": "",
   "license": "ISC",
   "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
