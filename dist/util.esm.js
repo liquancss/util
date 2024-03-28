@@ -1,4 +1,13 @@
 var _toString = Object.prototype.toString;
+/**
+ * @description Checks whether the given value(`@param value`) is of `function` type.
+ * @param value - The input value.
+ * @returns exact type in string, like `'array'`
+ * @example
+ * getType(function(){});    // Returns: function
+ * getType(123);             // Returns: number
+ * getType([]);              // Returns: array
+*/
 function getType(value) {
     return _toString.call(value).slice(8, -1).toLowerCase();
 }
@@ -108,7 +117,21 @@ function isUndef(value) {
  * isArray(null);          // Returns: false
  */
 function isArray(value) {
-    return Array.isArray ? Array.isArray(value) : Object.prototype.toString.call(value) === "[object Array]";
+    return Array.isArray ? Array.isArray(value) : getType(value) === "array";
+}
+/**
+ * Checks whether the given value is an `Object`.
+ *
+ * @param value - The value to be checked.
+ * @returns `true` if the value is an object, `false` otherwise.
+ *
+ * @example
+ * isObject({});            // Returns: true
+ * isObject([]);            // Returns: false
+ * isObject(null);          // Returns: false
+ */
+function isObject(value) {
+    return getType(value) === "object";
 }
 /**
  * Checks if the given value is a Date object.
@@ -194,5 +217,76 @@ function isMap(value) {
 function isWeakMap(value) {
     return getType(value) === "weakmap";
 }
+/**
+ * Checks if the given value is a `NativePromise` object.
+ *
+ * @param value The value to check.
+ * @returns Returns true if the given value is a `NativePromise` object; otherwise, false.
+ *
+ * @example
+ * isNativePromise(new Promise(()=>{}));   // Returns: true
+ * isNativePromise(function(){});          // Returns: false
+ * isNativePromise({});                    // Returns: false
+ */
+function isNativePromise(value) {
+    return getType(value) === "promise";
+}
+/**
+ * if `@param key` is own property of `@param value`, then return true.
+ *
+ * @param value The object
+ * @param key  The object property
+ * @returns Returns true if the given key is own property of `@param value`; otherwise, false.
+ *
+ * @example
+ * hasOwn({aa: 1}, "aa");              // Returns: true
+ * hasOwn({}, "toString");             // Returns: false
+ * hasOwn({}, "aa");                   // Returns: false
+ */
+function hasOwn(value, key) {
+    return !isUndef(value) && Object.hasOwnProperty.call(value, key);
+}
+/**
+ * Checks if the given value is a `Thenable` object or PromiseLike in other word.
+ *
+ * @param value The value to check.
+ * @returns Returns true if the given value is a `Thenable` object; otherwise, false.
+ *
+ * @example
+ * isThenable({then(){}});              // Returns: true
+ * isThenable(new Promise(()=>{}));     // Returns: false
+ * isThenable({});                      // Returns: false
+ */
+function isThenable(value) {
+    return hasOwn(value, "then") && isFunction(value.then);
+}
+/**
+ * Checks if the given value is a `Promise` object or PromiseLike object.
+ *
+ * @param value The value to check.
+ * @returns Returns true if the given value is a `Thenable` object; otherwise, false.
+ *
+ * @example
+ * isPromise({then(){}});              // Returns: true
+ * isPromise(new Promise(()=>{}));     // Returns: true
+ * isPromise({});                      // Returns: false
+ */
+function isPromise(value) {
+    return isNativePromise(value) || isThenable(value);
+}
+/**
+ * Checks if the given value is a `ArrayLike` object.
+ * @description ArrayLike object is a object which has a `length` property.
+ * @param value The value to check.
+ * @returns Returns true if the given value is a `Thenable` object; otherwise, false.
+ *
+ * @example
+ * isArrayLike({length: 0});              // Returns: true
+ * isArrayLike([]);                       // Returns: false
+ * isArrayLike({});                       // Returns: false
+ */
+function isArrayLike(value) {
+    return isObject(value) && hasOwn(value, "length");
+}
 
-export { getType, isArray, isBoolean, isDate, isFunction, isMap, isNull, isNumber, isRegExp, isSet, isString, isUndef, isUndefined, isWeakMap, isWeakSet };
+export { getType, hasOwn, isArray, isArrayLike, isBoolean, isDate, isFunction, isMap, isNativePromise, isNull, isNumber, isObject, isPromise, isRegExp, isSet, isString, isThenable, isUndef, isUndefined, isWeakMap, isWeakSet };

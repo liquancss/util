@@ -1,5 +1,5 @@
 import {equal} from "assert";
-import { isArray, isBoolean, isDate, isMap, isNull, isNumber, isRegExp, isSet, isString, isUndefined, isWeakMap } from "../../src/index";
+import {isWeakSet, isArray, isBoolean, isDate, isMap, isNull, isNumber, isRegExp, isSet, isString, isUndefined, isWeakMap, isObject, isNativePromise, isThenable } from "../../src/index";
 type CompareTypeValue = Array<any>;
 interface CompareType{
     String: CompareTypeValue,
@@ -13,7 +13,9 @@ interface CompareType{
     Set: CompareTypeValue,
     WeakSet: CompareTypeValue,
     Map: CompareTypeValue,
-    WeakMap: CompareTypeValue
+    WeakMap: CompareTypeValue,
+    Object: CompareTypeValue,
+    NativePromise: CompareTypeValue,
 }
 const cachedComparedType: CompareType = {
     String: ["", '', ``, "1123"],
@@ -28,6 +30,8 @@ const cachedComparedType: CompareType = {
     WeakSet: [new WeakSet()],
     Map: [new Map()],
     WeakMap: [new WeakMap()],
+    Object: [{}],
+    NativePromise: [new Promise(()=>{}), Promise.resolve()],
 };
 export function compareAll(){
     const types = (Object.keys(cachedComparedType) as Array<keyof CompareType>);
@@ -59,6 +63,12 @@ function getResolvedMethod(target: keyof CompareType){
             return isMap;
         case 'WeakMap':
             return isWeakMap;
+        case 'WeakSet':
+            return isWeakSet;
+        case 'Object':
+            return isObject;
+        case 'NativePromise':
+            return isNativePromise;
         default:
             throw new Error(`unknown target [${target}]`);
     }

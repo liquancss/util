@@ -1,1 +1,1 @@
-export * from './dist/util.common.js'
+export * from './util.common.js'

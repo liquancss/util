@@ -62,16 +62,24 @@ async function main(){
 
 
     
-    // commit to git
+    // git commit
+    await commit(targetVersion);
 
     // publish to npm
+    step("publishPackage");
+
+    await publishPackage(targetVersion);
+
+    step("git push");
+    await run("git", ["push"])
 
 }
-async function commit(){
+
+async function commit(targetVersion){
     const {stdout} = await run("git", ["diff"], { stdio: 'pipe' });
     if (stdout){
         await run("git", ["add", "-A"]);
-        await run("git", ["commit", "-m", `release(1.0.0)`])
+        await run("git", ["commit", "-m", `release(${targetVersion})`])
     }else{
         console.log(chalk.red("no changes"))
     }
@@ -83,11 +91,5 @@ async function publishPackage(targetVersion){
     await run("npm", ["publish", "--access", "public"]);
     console.log(chalk.green(`Successfully release v${targetVersion}`))
 }
-async function test(){
-    const targetVersion = "1.0.1";
-   await commit();
-   await publishPackage(targetVersion)
-    
-}
-test()
-// main();
+
+main();
