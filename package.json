@@ -1,6 +1,6 @@
 {
   "name": "@minsk/util",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "re_is_good",
   "description": "js util like get type from js etc.",
   "module": "dist/util.esm.js",
